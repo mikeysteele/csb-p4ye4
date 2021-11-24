@@ -1,0 +1,19 @@
+{
+  "extends": ["@open-wc/eslint-config","plugin:jsdoc/recommended"],
+  "plugins": [
+    "jsdoc"
+],
+  "parserOptions": {
+      "ecmaVersion": "latest"
+  },
+  "rules": {
+      "no-nested-ternary": "off",
+      "comma-dangle": "off",
+      "import/no-unresolved": "off",
+      "indent": ["error", 2, { "ignoredNodes": ["TemplateLiteral > *"] }],
+      "no-undef": "error",
+      "no-unused-vars": "warn"
+
+  }
+  
+}

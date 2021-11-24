@@ -1,0 +1,149 @@
+{
+  "name": "Michael Westcott",
+  "photo": "me.jpg",
+  "headline": "Software + Solutions",
+  "blurb": "I solve problems. I create relevant and engaging experiences. I enjoy building new and innovative products and have a real interest the technology I use. My excellent communication skills allow me to easily understand requirements and deliver solutions that exceed clients' expectations.",
+  "contact": [
+    {
+      "name": "email",
+      "link": "mailto:mjwestcott@gmail.com",
+      "linkText": "mjwestcott@gmail.com"
+    },
+
+    {
+      "name": "phone",
+      "link": "tel:+61424875200",
+      "linkText": "+61 424 875 200"
+    }
+  ],
+  "socials": [
+    {
+      "name": "linkedin",
+      "link": "https://linkedin.com/in/michael-westcott-40606623",
+      "linkText": "michael-westcott-40606623"
+    },
+    {
+      "name": "github",
+      "link": "https://github.com/mikeysteele",
+      "linkText": "mikeysteele"
+    },
+    {
+      "name": "stackoverflow",
+      "link": "https://stackoverflow.com/users/2889299/michael-westcott",
+      "linkText": "michael-westcott"
+    }
+  ],
+  "selfAssessment": [
+    {
+      "name": "TypeScript",
+      "rating": 100
+    },
+    {
+      "name": "Angular",
+      "rating": 100
+    },
+    {
+      "name": "CSS",
+      "rating": 90
+    },
+    {
+      "name": "NodeJS",
+      "rating": 90
+    },
+    {
+      "name": "NestJS",
+      "rating": 85
+    },
+    {
+      "name": ".NET Core",
+      "rating": "80"
+    }
+  ],
+  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA",  "Figma", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte"],
+  "roles": [
+    {
+      "subtitle": "DomaCom",
+      "title": "Digital Lead",
+      "timeFrame": {
+        "from": "2017-05-29",
+        "to": "NOW"
+      },
+      "content": "DomaCom is a Fintech startup who are developing a fractional investment online platform. My role here was developing and maintaining the client-facing application as well as the internal intranet applications, written in Angular and .NET CORE and hosted in the Azure cloud. As well as this, I had to develop web component libraries to allow sharing of code between our web application as well as our marketing site which was a Wordpress CMS.",
+      "tags": ["Angular", "NX", "Typescript", "StencilJS","Lit", "NestJS", ".NET CORE", "Service Bus", "Azure", "CosmosDB"]
+    },
+    {
+      "subtitle": "Tredale",
+      "title": "Senior Development Consultant",
+      "timeFrame": {
+        "from": "2015-01-01",
+        "to": "2017-05-29"
+      },
+      "content": "Tredale was a company specializing in Fintech solutions. In this role I was able to combine my domain knowledge of the finance industry, as well as my software development skills. I wrote applications using a Node.JS / Angular.JS / SQL Server platform with a bit of ASP.NET Web API when required",
+      "tags": ["AngularJS", "NodeJS", "Sql Server", "ASP.NET", "AWS", "PHP"]
+
+    },
+    {
+      "subtitle": "Imon Network (Beijing)",
+      "title": "Business Intelligence Manager",
+      "timeFrame": {
+        "from": "2013-01-01",
+        "to": "2015-01-01"
+      },
+      "content": "Initially engaged to create analytics reports for their custom web application, my role was expanded to include redesigning and developing their real-time advertising system in node.js, as well as porting the web application to Zend Framework 2 and data model improvements.",
+      "tags": ["NodeJS", "Socket.IO", "Redis", "MySQL", "Zend", "PHP"]
+    },
+    {
+      "subtitle": "Darwin Digital",
+      "title": "Technical Director",
+      "timeFrame": {
+        "from": "2012-01-01",
+        "to": "2013-01-01"
+      },
+      "content": "Darwin Digital was a boutique digital agency based in Shenzhen, China. My role there consisted of running the PHP development team, mentoring in UI/UX, designing and developing solutions using the Drupal CMS as well as writing Ruby-on-Rails applications.",
+      "tags": ["Ruby-On-Rails", "Drupal", "Jquery", "MySQL", "PHP"]
+
+    },
+    {
+      "subtitle": "Bizmetrics",
+      "title": "Developer",
+      "timeFrame": {
+        "from": "2010-01-01",
+        "to": "2012-01-01"
+      },
+      "content": "Bizmetrics was a company which provided business intelligence and reporting solutions for financial services companies. In this role I primarily worked on building client reporting packages using Crystal Reports as well as developed web portals using PHP and ASP.NET.",
+      "tags": ["ASP.NET", "Crystal Reports", "IRESS", "DotNetNuke"]
+    }
+  ],
+  "education": [
+    {
+      "subtitle": "RMIT",
+      "title": "Bachelor of Business (International Business)",
+      "timeFrame": {
+        "from": "2009-01-01",
+        "to": "2015-12-31"
+      },
+      "content": "",
+      "tags": ["Information Systems", "Accounting", "Quantitative Analysis"]
+    }
+  ],
+  "testimonials": [],
+  "testimonialss": [
+    {
+      "name": "Jason Bryant",
+      "avatar": "assets/images/jason-bryant.jpg",
+      "position": "Principal",
+      "organisation": "Financium",
+      "content": "I have worked with Michael over many years on a wide variety of development projects, including Fintech platforms, Business Intelligence solutions and reporting packages. In all of these, Michael kicked some serious arse ",
+      "linkedIn": "https://www.linkedin.com/in/jasonbryantaus"
+    },
+    {
+      "name": "Pita Oskam",
+      "avatar": "assets/images/pita-oskam.jpg",
+      "position": "Product manager (Strategy and execution to market)",
+      "organisation": "Havona",
+      "content": "Michael and I worked together numerous times.",
+      "linkedIn": "https://www.linkedin.com/in/pitaoskam"
+      
+    }
+  ]
+}
