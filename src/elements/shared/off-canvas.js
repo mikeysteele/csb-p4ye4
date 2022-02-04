@@ -8,18 +8,20 @@ export class OffCanvasElement extends LitElement {
 
   static styles = css`
     :host {
-      position: fixed;
-      transition: left 0.5s ease-in-out;
-
+      position: fixed;      
+      z-index: 2;
       width: var(--app-offcanvas-width);
       flex: 1 0 var(--app-offcanvas-width);
       height: 100vh;
+      
     }
     :host(.show) {
-      left: 0 !important;
+      transform: translateX(var(--app-offcanvas-width)) !important;
     }
     :host(:not(.disabled)) {
       left: calc(var(--app-offcanvas-width, 100%) * -1);
+      transform: translateX(0);
+      transition: transform 0.5s ease-in-out;
     }
 
     :host(.disabled) .toggle {

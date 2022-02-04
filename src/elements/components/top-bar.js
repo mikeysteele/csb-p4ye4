@@ -11,7 +11,8 @@ export class TopBarElement extends LitElement {
         width:100%;
         top: 0;
         right:0;
-        background: var(--app-body-background);       
+        background: var(--app-body-background);   
+        z-index: 2;    
     }
   `;
 

@@ -36,14 +36,16 @@ export class MyResumeElement extends LitElement {
         font-family: var(--app-font-family);
         line-height: 1.5;
         width: 100%;
+       
       }
       :host(.menu-open) main {
-        padding-left: var(--app-offcanvas-width);
+        transform: translateX(var(--app-offcanvas-width));
       }
       main {
         background: var(--app-content-background);
-        transition: padding 0.5s ease-in-out;
+        transition: transform 0.5s ease-in-out;
         box-sizing: border-box;
+        max-width: var(--app-max-width);
       }
       section {
         border-bottom: 1px solid var(--app-color-light);
