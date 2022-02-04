@@ -29,6 +29,8 @@ export class ResumeContactElement extends LitElement {
       li a {
         margin-left: 1rem;
         text-decoration: none;
+        color: var(--app-color-secondary);
+
       }
 
       h3 {
@@ -37,6 +39,7 @@ export class ResumeContactElement extends LitElement {
       fa-icon {
         width: 1rem;
         height: 1rem;
+        color: var(--app-color-primary);
       }
     `,
   ];
