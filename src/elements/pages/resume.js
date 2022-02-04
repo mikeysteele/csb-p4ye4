@@ -45,6 +45,7 @@ export class MyResumeElement extends LitElement {
         background: var(--app-content-background);
         transition: transform 0.5s ease-in-out;
         box-sizing: border-box;
+        max-width: var(--app-max-width);
       }
       section {
         border-bottom: 1px solid var(--app-color-light);

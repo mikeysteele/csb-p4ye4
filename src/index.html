@@ -37,7 +37,7 @@
         --app-sidebar-background: #5655da;
         --app-sidebar-text-color: #fff;
 
-        --app-max-width: 1000px;
+        --app-max-width: 740px;
         --app-offcanvas-width: 260px;
         
       }
@@ -49,7 +49,7 @@
           overflow-x: hidden;
         }
         my-resume {
-          max-width: var(--app-max-width);
+          max-width: calc(var(--app-max-width) + var(--app-offcanvas-width));
           margin: 0 auto;
 
         }

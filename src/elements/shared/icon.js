@@ -1,6 +1,6 @@
 import { html, LitElement, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { icon } from '@fortawesome/fontawesome-svg-core';
+import { icon, toHtml } from '@fortawesome/fontawesome-svg-core';
 
 export class IconElement extends LitElement {
   static styles = css`
