@@ -1,9 +1,9 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import html from '@web/rollup-plugin-html';
-
+import  path  from 'path';
 import copy from 'rollup-plugin-copy';
 import { terser } from 'rollup-plugin-terser';
-import { generateSW  } from 'rollup-plugin-workbox';
+import { generateSW } from 'rollup-plugin-workbox';
 
 export default {
   // Add extra entry points here if there are multiple to build
@@ -14,6 +14,9 @@ export default {
     {
       dir: 'dist',
       entryFileNames: '[name].[hash].[format].js',
+      chunkFileNames: 'chunk.[hash].[format].js',
+      format: 'es',
+
     },
   ],
 
@@ -24,9 +27,17 @@ export default {
     warn(warning);
   },
   plugins: [
+   
     generateSW({
-      swDest: 'dist/sw.js',
-      globDirectory: 'dist',
+      navigateFallback: '/index.html',
+      // where to output the generated sw
+      swDest: path.join('dist', 'sw.js'),
+      // directory to match patterns against to be precached
+      globDirectory: path.join('dist'),
+      // cache any html js and css by default
+      globPatterns: ['**/*.{html,js,css,webmanifest}'],
+      skipWaiting: true,
+      clientsClaim: true,
     }),
     html({
       absoluteBaseUrl: 'https://michaelwestcott.me',
@@ -43,7 +54,7 @@ export default {
     copy({
       targets: [
         { src: 'src/data.json', dest: 'dist' },
-        { src: 'src/assets', dest: 'dist' },
+        { src: 'src/assets/images', dest: 'dist/assets' },
       ],
     }),
   ],
