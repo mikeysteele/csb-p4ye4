@@ -131,9 +131,9 @@ export class MyResumeElement extends LitElement {
         css`
           :host {
             --current-breakpoint: md;
-            padding-top:0;
+            padding-top: 0;
           }
-          top-bar{
+          top-bar {
             display: none;
           }
         `
@@ -234,6 +234,7 @@ export class MyResumeElement extends LitElement {
 
   /**
    * Add or rebove the menu-open class
+   *
    * @param {boolean} isOpen
    */
   menuIsToggled(isOpen) {
@@ -242,6 +243,25 @@ export class MyResumeElement extends LitElement {
     } else {
       this.classList.remove('menu-open');
     }
+  }
+
+  /**
+   * Scroll to the required element without scrolling horizontally;
+   *
+   * @param {HTMLElement} el
+   */
+  scrollTo(el) {
+    const { top } = this.renderRoot
+      .querySelector(el)
+      ?.getBoundingClientRect() ?? { top: 0 };
+    const { height } = this.renderRoot
+      .querySelector('top-bar')
+      ?.getBoundingClientRect() ?? { top: 0 };
+    window.scrollBy({
+      top: top - height,
+      left: 0,
+      behavior: 'smooth',
+    });
   }
 
   render() {
@@ -262,20 +282,22 @@ export class MyResumeElement extends LitElement {
                 imageUrl="${this.data.photo}"
                 .socials="${this.data.socials}"
                 .links="${this.#sections}"
-                @linkClicked="${({ detail }) => this.renderRoot
-            .querySelector(detail)
-            ?.scrollIntoView({ behavior: 'smooth', inline: 'end' })}"
+                @linkClicked="${({ detail }) => this.scrollTo(detail)}"
               >
               </resume-sidebar>
             </off-canvas>
             <top-bar>
               <nav>
-                <button aria-label="toggle menu" @click="${() => this.renderRoot.querySelector('off-canvas').toggle()}"><fa-icon icon="bars"></fa-icon></button> 
+                <button
+                  aria-label="toggle menu"
+                  @click="${() => this.renderRoot.querySelector('off-canvas').toggle()}"
+                >
+                  <fa-icon icon="bars"></fa-icon>
+                </button>
                 <h1>${this.data.name}</h1>
               </nav>
             </top-bar>
             <main>
-             
               <section class="blurb" id="about">
                 <div>
                   <h2>About Me</h2>
