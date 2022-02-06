@@ -2,9 +2,8 @@ import { nodeResolve } from '@rollup/plugin-node-resolve';
 import html from '@web/rollup-plugin-html';
 import path from 'path';
 import copy from 'rollup-plugin-copy';
-import { terser } from 'rollup-plugin-terser';
 import { generateSW } from 'rollup-plugin-workbox';
-import typescript from '@rollup/plugin-typescript';
+import esbuild from 'rollup-plugin-esbuild'
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -29,8 +28,9 @@ export default {
     warn(warning);
   },
   plugins: [
-    typescript({
-      tsconfig: 'tsconfig.app.json'
+    esbuild({
+      tsconfig: 'tsconfig.app.json',
+      minify: true
     }),
     generateSW({
       navigateFallback: '/index.html',
@@ -52,10 +52,7 @@ export default {
     nodeResolve({
       exportConditions: ['production'],
       extensions
-    }),
-    terser({
-      mangle: false,
-    }),
+    }),   
     copy({
       targets: [
         { src: 'src/data.json', dest: 'dist' },

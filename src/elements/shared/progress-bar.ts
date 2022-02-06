@@ -31,12 +31,13 @@ export class ProgressBarElement extends LitElement {
       transform: translateX(0)
      
     }
+    
     :host(.primary) .progress-bar {
       background-color: var(--app-color-primary);
     }
   `;
 
-  @property() public value: number | string = 0;
+  @property() value: number | string = 0;
   
 
   connectedCallback() {
