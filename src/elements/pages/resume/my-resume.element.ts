@@ -1,37 +1,40 @@
-import '../components/contact.js';
-import '../components/sidebar.js';
-import '../components/top-bar.js';
-import '../shared/carousel.js';
-import '../shared/icon.js';
-import '../shared/off-canvas.js';
-import '../shared/progress-bar.js';
-import '../shared/timeline.js';
-import '../shared/loading.js';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { css, html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { state } from 'lit/decorators/state.js';
 import debounce from 'lodash-es/debounce';
+import { ResumeData } from 'src/models/ResumeData';
+import { OffCanvasElement } from '../../shared/off-canvas';
 
-import { includeBreakpointUp } from '../../styles/functions/breakpoints.js';
-import grid from '../../styles/grid.js';
-import headings from '../../styles/headings.js';
-import tags from '../../styles/tags.js';
+import { includeBreakpointUp } from '../../../styles/functions/breakpoints';
+import grid from '../../../styles/grid';
+import headings from '../../../styles/headings';
+import tags from '../../../styles/tags';
+
+
 
 library.add(faBars);
-export class MyResumeElement extends LitElement {
-  static API_URL = './data.json';
 
-  static properties = {
-    data: {},
-    loading: {},
-    error: {},
-    offCanvasDisabled: { state: true },
-  };
+@customElement('my-resume')
+export class MyResumeElement extends LitElement {
+  static readonly API_URL = './data.json';
 
   static styles = [
     headings,
     grid,
     tags,
+    css`
+      @media print {
+        top-bar {
+          display: none;
+        }
+        a[href]::after {
+          content: " (" attr(href) ")";  
+        }
+      }
+    
+    `,
     css`
       :host {
         display: flex;
@@ -45,10 +48,8 @@ export class MyResumeElement extends LitElement {
         transform: translateX(var(--app-offcanvas-width));
       }
       main {
-        background: var(--app-content-background);
-        transition: transform 0.5s ease-in-out;
-        box-sizing: border-box;
-        max-width: var(--app-max-width);
+        background: var(--app-content-background);        
+        transition: var(--app-offcanvas-transform);
       }
       section {
         border-bottom: 1px solid var(--app-color-light);
@@ -146,11 +147,7 @@ export class MyResumeElement extends LitElement {
         'md',
         css`
           :host {
-            --current-breakpoint: md;
-            padding-top: 0;
-          }
-          top-bar {
-            display: none;
+            --current-breakpoint: md;           
           }
         `
       )}
@@ -158,7 +155,14 @@ export class MyResumeElement extends LitElement {
         'lg',
         css`
           :host {
-            --current-breakpoint: lg;
+            --current-breakpoint: lg;  
+            padding-top: 0;
+          }
+          main {
+            max-width: var(--app-max-width);
+          }
+          top-bar {
+            display: none;
           }
           section.name {
             display: none;
@@ -184,17 +188,18 @@ export class MyResumeElement extends LitElement {
           }
         `
       )}
-      @media print {
-        top-bar {
-          display: none;
-        }
-        a[href]::after {
-          content: " (" attr(href) ")"; } 
-        }
-      }
+      
     `,
   ];
 
+  @state() private offCanvasDisabled = false;
+
+  @state() private loading = false;
+
+  @state() private data?: ResumeData;
+
+  @state() private error?: Error;
+  
   get currentBreakpoint() {
     return getComputedStyle(this)
       .getPropertyValue('--current-breakpoint')
@@ -223,12 +228,10 @@ export class MyResumeElement extends LitElement {
 
   constructor() {
     super();
-    
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.fetch = window.fetch.bind(window);
     this.#loadData();
     this.#onResize();
     window.addEventListener('resize', this.#debouncedResize);
@@ -242,7 +245,7 @@ export class MyResumeElement extends LitElement {
   async #loadData() {
     try {
       this.loading = true;
-      this.data = await this.fetch(MyResumeElement.API_URL).then(data => data.json());
+      this.data = await fetch(MyResumeElement.API_URL).then(data => data.json());
     } catch (e) {
       this.error = new Error(
         'There was an error loading data. Please check your internet connection and try again.'
@@ -257,7 +260,7 @@ export class MyResumeElement extends LitElement {
    *
    * @param {boolean} isOpen
    */
-  menuIsToggled(isOpen) {
+  public menuIsToggled(isOpen: boolean) {
     if (isOpen) {
       this.classList.add('menu-open');
     } else {
@@ -265,18 +268,13 @@ export class MyResumeElement extends LitElement {
     }
   }
 
-  /**
-   * Scroll to the required element without scrolling horizontally;
-   *
-   * @param {HTMLElement} el
-   */
-  scrollTo(el) {
+  public scrollToEl(el: string) {
     const { top } = this.renderRoot
       .querySelector(el)
       ?.getBoundingClientRect() ?? { top: 0 };
     const { height } = this.renderRoot
       .querySelector('top-bar')
-      ?.getBoundingClientRect() ?? { top: 0 };
+      ?.getBoundingClientRect() ?? { height: 0 };
     window.scrollBy({
       top: top - height,
       left: 0,
@@ -290,19 +288,19 @@ export class MyResumeElement extends LitElement {
         ? html`<app-loading></app-loading>`
         : this.error
           ? html`<div class="app-error">${this.error.message}</div>`
-          : html`
+          : this.data? html`
             <off-canvas
               class="${this.offCanvasDisabled ? 'disabled' : ''} no-button"
               state="closed"
-              @menuToggled=${({ detail }) => this.menuIsToggled(detail)}
+              @menuToggled=${({ detail }: CustomEvent) => this.menuIsToggled(detail)}
             >
               <resume-sidebar
-                name="${this.data.name}"
-                headline="${this.data.headline}"
-                imageUrl="${this.data.photo}"
-                .socials="${this.data.socials}"
+                name="${this.data?.name}"
+                headline="${this.data?.headline}"
+                imageUrl="${this.data?.photo}"
+                .socials="${this.data?.socials}"
                 .links="${this.#sections}"
-                @linkClicked="${({ detail }) => this.scrollTo(detail)}"
+                @linkClicked="${({ detail }: CustomEvent) => this.scrollToEl(detail)}"
               >
               </resume-sidebar>
             </off-canvas>
@@ -310,19 +308,19 @@ export class MyResumeElement extends LitElement {
               <nav>
                 <button
                   aria-label="toggle menu"
-                  @click="${() => this.renderRoot.querySelector('off-canvas').toggle()}"
+                  @click="${() => this.renderRoot.querySelector<OffCanvasElement>('off-canvas')?.toggleMenu()}"
                 >
                   <fa-icon icon="bars"></fa-icon>
                 </button>
-                <h1>${this.data.name}</h1>
+                <h1>${this.data?.name}</h1>
               </nav>
             </top-bar>
             <main>
               <section class="blurb" id="about">
                 <div>
                   <h2>About Me</h2>
-                  <div>${this.data.blurb}</div>
-                  <resume-contact .data=${this.data.contact}></resume-contact>
+                  <div>${this.data?.blurb}</div>
+                  <resume-contact .data=${this.data?.contact}></resume-contact>
                 </div>
               </section>
 
@@ -331,8 +329,8 @@ export class MyResumeElement extends LitElement {
                   <h2>Skills</h2>
                   <div class="self-assessment flex-grid">
                     <div class="row">
-                      ${this.data.selfAssessment.map(
-                        ({ name, rating }) => html`
+                      ${this.data?.selfAssessment.map(
+                        ({ name, rating }: {name: string, rating: number}) => html`
                           <div class="col-md-6">
                             <div class="panel">
                               <span class="name">${name}</span>
@@ -350,8 +348,8 @@ export class MyResumeElement extends LitElement {
                     </div>
                   </div>
                   <div class="skill-tags">
-                    ${this.data.skills.map(
-                      s => html` <div class="tag">${s}</div> `
+                    ${this.data?.skills.map(
+                      (s: string) => html` <div class="tag">${s}</div> `
                     )}
                   </div>
                 </div>
@@ -360,18 +358,18 @@ export class MyResumeElement extends LitElement {
               <section id="work">
                 <div>
                   <h2>Work Experience</h2>
-                  <resume-timeline .data=${this.data.roles}></resume-timeline>
+                  <resume-timeline .data=${this.data?.roles}></resume-timeline>
                 </div>
               </section>
               <section id="education">
                 <div>
                   <h2>Education</h2>
                   <resume-timeline
-                    .data=${this.data.education}
+                    .data=${this.data?.education}
                   ></resume-timeline>
                 </div>
               </section>
-              ${this.data.testimonials.length
+              ${this.data?.testimonials.length
                 ? html`<section id="testimonials">
                     <div>
                       <h2>Testimonials</h2>
@@ -384,6 +382,13 @@ export class MyResumeElement extends LitElement {
                             organisation,
                             avatar,
                             linkedIn,
+                          }:{
+                            name: string,
+                            position: string,
+                            content: string,
+                            organisation: string,
+                            avatar: string,
+                            linkedIn: string,
                           }) => html`
                             <article>
                               <p>
@@ -412,9 +417,7 @@ export class MyResumeElement extends LitElement {
                   </section>`
                 : ''}
             </main>
-          `}
+          ` : ''}  
     `;
   }
 }
-
-customElements.define('my-resume', MyResumeElement);

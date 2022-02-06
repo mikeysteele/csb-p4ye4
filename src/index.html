@@ -39,6 +39,7 @@
 
         --app-max-width: 740px;
         --app-offcanvas-width: 260px;
+        --app-offcanvas-transform: transform 0.5s ease-in-out;
         
       }
       @media screen {
@@ -59,13 +60,14 @@
     
    
 
-    <script type="module" src="./index.js">
+    <script type="module" src="./index.ts">
     </script>
     
   </head>
   <body>
     <div class="page">
-      <my-resume>Please enable Javascript to use this application</my-resume>
+      <my-resume></my-resume>
     </div>
+    <noscript>Please enable Javascript to use this application</noscript>
   </body>
 </html>

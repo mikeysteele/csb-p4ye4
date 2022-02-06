@@ -1,5 +1,5 @@
 import { LitElement, html, css } from 'lit';
-import '../shared/icon.js';
+import '../shared/fa-icon/fa-icon.element';
 
 export class TopBarElement extends LitElement {
   static styles = css`

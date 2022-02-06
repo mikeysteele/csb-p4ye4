@@ -1,5 +1,7 @@
 import { css, html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
 
+@customElement('app-loading')
 export class LoadingElement extends LitElement {
   static styles = css`
     :host {
@@ -46,4 +48,3 @@ export class LoadingElement extends LitElement {
   }
 }
 
-customElements.define('app-loading', LoadingElement)

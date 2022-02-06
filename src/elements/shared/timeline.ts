@@ -1,7 +1,9 @@
 import { LitElement, html, css } from 'lit';
-import headings from '../../styles/headings.js';
-import tagStyles from '../../styles/tags.js';
-import './flip-card.js';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { TimelineData } from 'src/models/TimelineData';
+import headings from '../../styles/headings';
+import tagStyles from '../../styles/tags';
 
 const bgColors = [
   {
@@ -17,11 +19,9 @@ const bgColors = [
     color2: '#9a4eff',
   },
 ];
-export class ResumeTimelineElement extends LitElement {
-  static properties = {
-    data: {},
-  };
 
+@customElement('resume-timeline')
+export class ResumeTimelineElement extends LitElement {
   static styles = [
     headings,
     tagStyles,
@@ -31,7 +31,6 @@ export class ResumeTimelineElement extends LitElement {
         list-style: none;
       }
       li {
-        
         padding-bottom: 1rem;
       }
       li + li {
@@ -56,24 +55,23 @@ export class ResumeTimelineElement extends LitElement {
         flex-flow: row wrap;
         justify-content: flex-start;
         gap: 10px;
-        
       }
     `,
   ];
 
-  static getTimeFrame(timeFrame) {
+  static getTimeFrame(timeFrame: { to: string; from: string }) {
     return `${new Date(timeFrame.from).getFullYear()} - ${
       new Date(timeFrame.to).getFullYear() || 'Now'
     }`;
   }
 
-  render() {
+  @property() public data?: TimelineData[];
+
+  public render() {
     return html`
       <ul>
-        ${this.data.map(
-          ({
-            title, subtitle, content, timeFrame, tags
-          }) => html` <li>
+        ${this.data?.map(
+          ({ title, subtitle, content, timeFrame, tags }) => html` <li>
             <h3>${title}</h3>
             <h4>${subtitle} | ${ResumeTimelineElement.getTimeFrame(
             timeFrame
@@ -82,9 +80,7 @@ export class ResumeTimelineElement extends LitElement {
             ${
               tags?.length
                 ? html`<div class="skill-tags">
-                    ${tags.map(
-                      s => html` <div class="tag">${s}</div> `
-                    )}
+                    ${tags.map((s) => html` <div class="tag">${s}</div> `)}
                   </div>`
                 : ''
             }
@@ -94,5 +90,3 @@ export class ResumeTimelineElement extends LitElement {
     `;
   }
 }
-
-customElements.define('resume-timeline', ResumeTimelineElement);

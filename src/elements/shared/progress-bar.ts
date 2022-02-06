@@ -1,13 +1,10 @@
 import { LitElement, html, css } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
+@customElement('progress-bar')
 export class ProgressBarElement extends LitElement {
-  static properties = {
-    value: {},
-    ariaLabel: {
-      attribute: 'aria-label'
-    }
-  };
-
+  
   static styles = css`
     :host {
       height: 4px;
@@ -39,6 +36,9 @@ export class ProgressBarElement extends LitElement {
     }
   `;
 
+  @property() public value: number | string = 0;
+  
+
   connectedCallback() {
     super.connectedCallback();
     // for the transition to work, the value needs to change so we set it to 0 first then change it.
@@ -59,10 +59,9 @@ export class ProgressBarElement extends LitElement {
         aria-valuenow="${this.value}"
         aria-valuemin="0"
         aria-valuemax="100"
-        style="transform :translateX(-${100 - this.value}%)"
+        style="transform :translateX(-${100 - +this.value}%)"
       ></div>
     `;
   }
 }
 
-customElements.define('progress-bar', ProgressBarElement);

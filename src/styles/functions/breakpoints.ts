@@ -1,4 +1,6 @@
-import { css } from 'lit';
+import { css, CSSResult } from 'lit';
+
+export type CssBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 
 export const breakpoints = {
   xs: 0,
@@ -9,7 +11,7 @@ export const breakpoints = {
   xxl: 1400,
 };
 
-function getBreakPoint(breakpoint) {
+function getBreakPoint(breakpoint: CssBreakpoint) {
   const bp = breakpoints[breakpoint];
   if (bp === undefined) {
     throw new Error(
@@ -18,7 +20,7 @@ function getBreakPoint(breakpoint) {
   }
   return bp;
 }
-export function includeBreakpointUp(breakpoint, content) {
+export function includeBreakpointUp(breakpoint: CssBreakpoint, content: CSSResult) {
   const bp = getBreakPoint(breakpoint);
   return css`
     @media screen and (min-width: ${bp}px) {
@@ -27,7 +29,7 @@ export function includeBreakpointUp(breakpoint, content) {
   `;
 }
 
-export function includeBreakpointDown(breakpoint, content) {
+export function includeBreakpointDown(breakpoint: CssBreakpoint, content: CSSResult) {
   const bp = getBreakPoint(breakpoint);
 
   return css`

@@ -1,0 +1,1 @@
+export { CarouselElement } from './carousel.element';

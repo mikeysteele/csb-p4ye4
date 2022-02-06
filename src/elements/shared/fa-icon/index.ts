@@ -1,0 +1,1 @@
+export {IconElement } from './fa-icon.element';

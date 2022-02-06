@@ -1,7 +1,10 @@
 import { html, LitElement, css } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
-import { icon, toHtml } from '@fortawesome/fontawesome-svg-core';
+import { Icon, icon, IconLookup } from '@fortawesome/fontawesome-svg-core';
+import { property } from 'lit/decorators/property.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
+@customElement('fa-icon')
 export class IconElement extends LitElement {
   static styles = css`
     :host {
@@ -335,38 +338,32 @@ export class IconElement extends LitElement {
       }
     }
     .fa-rotate-90 {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)';
       -webkit-transform: rotate(90deg);
       transform: rotate(90deg);
     }
 
     .fa-rotate-180 {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)';
       -webkit-transform: rotate(180deg);
       transform: rotate(180deg);
     }
 
     .fa-rotate-270 {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)';
       -webkit-transform: rotate(270deg);
       transform: rotate(270deg);
     }
 
     .fa-flip-horizontal {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)';
       -webkit-transform: scale(-1, 1);
       transform: scale(-1, 1);
     }
 
     .fa-flip-vertical {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)';
       -webkit-transform: scale(1, -1);
       transform: scale(1, -1);
     }
 
     .fa-flip-both,
     .fa-flip-horizontal.fa-flip-vertical {
-      -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)';
       -webkit-transform: scale(-1, -1);
       transform: scale(-1, -1);
     }
@@ -464,30 +461,16 @@ export class IconElement extends LitElement {
     }
   `;
 
-  static properties = {
-    icon: {},
-    prefix: {},
-    svgData: {
-      state: true,
-    },
-  };
+  private iconLookup?: Icon;
 
-  /**
-   *
-   * @param {*} i
-   * @returns {boolean}
-   */
-  static isIconLookup(i) {
-    return i.prefix !== undefined && i.iconName !== undefined;
+  static isIconLookup(i: string | IconLookup): i is IconLookup {
+    return typeof i !== 'string' && (i.prefix !== undefined && i.iconName !== undefined);
   }
 
-  /**
-   *
-   * @param {string | IconLookup} iconSpec
-   * @param {string } defaultPrefix
-   * @returns {IconLookup | null}
-   */
-  static faNormalizeIconSpec(iconSpec, defaultPrefix = 'fas') {
+  static faNormalizeIconSpec(
+    iconSpec: string | IconLookup,
+    defaultPrefix: string | null = 'fas'
+  ): IconLookup | null {
     let val = null;
     if (typeof iconSpec === 'undefined' || iconSpec === null) {
       val = null;
@@ -500,33 +483,46 @@ export class IconElement extends LitElement {
     }
     return val;
   }
+  @property() icon?: string | IconLookup;
+  @property({
+    attribute: 'prefix'
+  }) faPrefix?: string;
+  @property({ state: true }) svgData?: string;
 
   connectedCallback() {
     super.connectedCallback();
     this.loadIcon();
   }
 
-  willUpdate(changedProperties) {
+  protected willUpdate(
+    changedProperties: Map<string | number | symbol, unknown>
+  ): void {
     super.willUpdate(changedProperties);
 
-    if (changedProperties.icon || changedProperties.prefix) {
+    if (changedProperties.get('icon') || changedProperties.get('prefix')) {
       this.loadIcon();
     }
   }
 
-  render() {
+  protected render() {
     return html`<span>${unsafeHTML(this.svgData)}</span>`;
   }
 
-  loadIcon() {
-    const iconLookup = IconElement.faNormalizeIconSpec(this.icon, this.prefix);
-    this.iconLookup = icon(iconLookup);
+  private loadIcon() {
+    if (!this.icon) {
+      throw new Error('No Icon Provided');
+    }
+    const iconLookup = IconElement.faNormalizeIconSpec(this.icon, this.faPrefix);
+    if (iconLookup) {
+      this.iconLookup = icon(iconLookup);
+    }
+
     const parser = new DOMParser();
 
     if (!this.iconLookup) {
       this.svgData = '';
       throw new Error(
-        `unable to find icon ${iconLookup.prefix} ${iconLookup.iconName}. Did you forget to add it to the library?`
+        `unable to find icon ${iconLookup?.prefix} ${iconLookup?.iconName}. Did you forget to add it to the library?`
       );
     } else {
       this.svgData = parser.parseFromString(
@@ -537,4 +533,3 @@ export class IconElement extends LitElement {
   }
 }
 
-customElements.define('fa-icon', IconElement);
