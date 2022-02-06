@@ -1,5 +1,5 @@
 import { unsafeCSS, css } from 'lit';
-import { includeBreakpointUp } from './functions/breakpoints.js';
+import { CssBreakpoint, includeBreakpointUp } from './functions/breakpoints.js';
 
 /**
  * Columns Mixin
@@ -7,12 +7,12 @@ import { includeBreakpointUp } from './functions/breakpoints.js';
  * @param {string} size
  * @returns CssResult
  */
-export function includeColumns(size = 'xs') {
+export function includeColumns(size: CssBreakpoint = 'xs') {
   let sizePrefix = '';
   if (size !== 'xs') {
     sizePrefix = `-${size}`;
   }
-  const columns = new Array(12).fill().map(
+  const columns = new Array(12).fill(undefined).map(
     (_, i) => `
      .flex-grid .col${sizePrefix}-${i + 1} {
         flex: 0 0 calc(${((i + 1) / 12) * 100}% - calc(var(--app-grid-gap, 15px) / 2 ));    

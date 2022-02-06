@@ -1,27 +1,24 @@
 import { LitElement, html, css } from 'lit';
+import { property } from 'lit/decorators/property.js';
+import { customElement } from 'lit/decorators/custom-element.js';
 
+@customElement('off-canvas')
 export class OffCanvasElement extends LitElement {
-  static properties = {
-    state: {},
-    disabled: {},
-  };
-
+  
   static styles = css`
     :host {
       position: fixed;      
       z-index: 2;
       width: var(--app-offcanvas-width);
       flex: 1 0 var(--app-offcanvas-width);
-      height: 100vh;
-      
+      height: 100vh;      
     }
     :host(.show) {
-      transform: translateX(var(--app-offcanvas-width)) !important;
+      transform: translateX(0) !important;
     }
     :host(:not(.disabled)) {
-      left: calc(var(--app-offcanvas-width, 100%) * -1);
-      transform: translateX(0);
-      transition: transform 0.5s ease-in-out;
+      transform: translateX(calc(var(--app-offcanvas-width, 100%) * -1));
+      transition: var(--app-offcanvas-transform);
     }
 
     :host(.disabled) .toggle {
@@ -48,6 +45,8 @@ export class OffCanvasElement extends LitElement {
     
   `;
 
+  @property() public state?: 'open' | 'closed';
+
   get disabled() {
     return this.classList.contains('disabled');
   }
@@ -55,13 +54,13 @@ export class OffCanvasElement extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     if (this.state === 'open' && !this.disabled) {
-      this.toggle();
+      this.toggleMenu();
     }
   }
 
   render() {
     return html`
-      <button class="toggle" @click=${() => this.toggle()} aria-label="Open side menu">
+      <button class="toggle" @click=${() => this.toggleMenu()} aria-label="Open side menu">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="#fff"
@@ -78,7 +77,7 @@ export class OffCanvasElement extends LitElement {
     `;
   }
 
-  toggle() {
+  toggleMenu() {
     this.classList.toggle('show');
     this.dispatchEvent(
       new CustomEvent('menuToggled', {
@@ -87,4 +86,4 @@ export class OffCanvasElement extends LitElement {
     );
   }
 }
-customElements.define('off-canvas', OffCanvasElement);
+

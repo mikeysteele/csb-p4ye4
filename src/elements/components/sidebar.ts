@@ -1,29 +1,19 @@
 import { LitElement, html, css } from 'lit';
-import { faLinkedin, faStackOverflow, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { library } from '@fortawesome/fontawesome-svg-core';
-
-import '../shared/icon.js';
+import {
+  faLinkedin,
+  faStackOverflow,
+  faGithub,
+} from '@fortawesome/free-brands-svg-icons';
+import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import '../shared/fa-icon/fa-icon.element';
+import { Link } from 'src/models/Link';
 
 library.add(faLinkedin, faStackOverflow, faGithub);
 
-/**
- * Class definition
- *
- * @property {string}  name
- * @property {string}  headline
- * @property {string}  imageUrl
- * @property {string[]}  socials
- * @property {string[]} links
- */
+@customElement('resume-sidebar')
 export class ResumeSidebarElement extends LitElement {
-  static properties = {
-    name: {},
-    headline: {},
-    imageUrl: {},
-    socials: {},
-    links: {},
-  };
-
   static styles = [
     css`
       :host {
@@ -83,7 +73,7 @@ export class ResumeSidebarElement extends LitElement {
           display: none
         }
         a[href]::after {
-          content: " (" attr(href) ")"; } 
+          content: " (" attr(href) ")"; 
           color: #fff;
         }
       }
@@ -91,18 +81,19 @@ export class ResumeSidebarElement extends LitElement {
     `,
   ];
 
-  icons = {
+  private readonly icons: { [key: string]: IconDefinition } = {
     linkedin: faLinkedin,
     github: faGithub,
-    stackoverflow: faStackOverflow
+    stackoverflow: faStackOverflow,
   };
+  @property() imageUrl?: string;
+  @property() name?: string;
+  @property() headline?: string;
 
-  /**
-   *
-   * @param {Event} event
-   * @param {string} link
-   */
-  linkClicked(event, link) {
+  @property() socials?: Link[];
+  @property() links: Map<string, string> = new Map<string, string>();
+
+  linkClicked(event: MouseEvent, link: string) {
     event.preventDefault();
     this.dispatchEvent(new CustomEvent('linkClicked', { detail: link }));
   }
@@ -116,30 +107,32 @@ export class ResumeSidebarElement extends LitElement {
       </section>
       <section class="socials">
         ${this.socials?.map(
-      ({
-        name, link, linkText
-      }) => html`<a href="${link}" target="_blank"  rel="noopener" title="${name} ${linkText}"
-              >              <fa-icon icon="${this.icons[name].iconName}" prefix="${this.icons[name].prefix}"></fa-icon>
-
-            </a>`
-    )}
+          ({ name, link, linkText }) => html`<a
+            href="${link}"
+            target="_blank"
+            rel="noopener"
+            title="${name} ${linkText}"
+          >
+            <fa-icon
+              icon="${this.icons[name].iconName}"
+              prefix="${this.icons[name].prefix}"
+            ></fa-icon>
+          </a>`
+        )}
       </section>
       <section class="links">
         <ul>
           ${[...this.links].map(
             ([link, name]) => html`<li>
-                <a
-                  href="${link}"
-                 
-                  @click=${(/** @type {Event} */ event) => this.linkClicked(event, link)}
-                  >${name}</a
-                >
-              </li>`
+              <a
+                href="${link}"
+                @click=${(e: MouseEvent) => this.linkClicked(e, link)}
+                >${name}</a
+              >
+            </li>`
           )}
         </ul>
       </section>
     `;
   }
 }
-
-customElements.define('resume-sidebar', ResumeSidebarElement);

@@ -1,0 +1,33 @@
+{
+  "compileOnSave": false,  
+  "compilerOptions": {
+    "rootDir": "./src",
+    "sourceMap": false,
+    "declaration": false,
+    "target": "es2018",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "noEmitOnError": true,
+    "lib": ["es2017", "dom"],
+    "strict": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "typeRoots": ["node_modules/@types"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "tmp", "dist"],
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

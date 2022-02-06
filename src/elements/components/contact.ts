@@ -1,18 +1,19 @@
-import { LitElement, html, css } from 'lit';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { faPhone, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import '../shared/icon.js';
+import '../shared/fa-icon';
+
+import { IconDefinition, library } from '@fortawesome/fontawesome-svg-core';
+import { faEnvelope, faPhone } from '@fortawesome/free-solid-svg-icons';
+import { css, html, LitElement } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { Link } from '../../models/Link';
 
 library.add(faPhone, faEnvelope);
 
+@customElement('resume-contact')
 export class ResumeContactElement extends LitElement {
-  static properties = {
-    data: {},
-  };
-
-  icons = {
+  private readonly icons: { [key: string]: IconDefinition } = {
     phone: faPhone,
-    email: faEnvelope
+    email: faEnvelope,
   };
 
   static styles = [
@@ -30,7 +31,6 @@ export class ResumeContactElement extends LitElement {
         margin-left: 1rem;
         text-decoration: none;
         color: var(--app-color-secondary);
-
       }
 
       h3 {
@@ -43,17 +43,18 @@ export class ResumeContactElement extends LitElement {
       }
     `,
   ];
+  @property() data?: Link[];
 
   render() {
     return html`
-      
       <ul>
-        ${this.data.map(
-          ({
-            name, link, linkText
-          }) => html`
+        ${this.data?.map(
+          ({ name, link, linkText }) => html`
             <li>
-              <fa-icon icon="${this.icons[name].iconName}" prefix="${this.icons[name].prefix}"></fa-icon>
+              <fa-icon
+                icon="${this.icons[name]?.iconName}"
+                prefix="${this.icons[name]?.prefix}"
+              ></fa-icon>
               <a href="${link}" title="${name}">${linkText || link}</a>
             </li>
           `
@@ -62,5 +63,3 @@ export class ResumeContactElement extends LitElement {
     `;
   }
 }
-
-customElements.define('resume-contact', ResumeContactElement);

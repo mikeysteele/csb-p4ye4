@@ -1,22 +1,10 @@
 import { LitElement, html, css } from 'lit';
+import { customElement } from 'lit/decorators/custom-element.js';
+import { property } from 'lit/decorators/property.js';
+import { state } from 'lit/decorators/state.js';
 
+@customElement('content-carousel')
 export class CarouselElement extends LitElement {
-  static properties = {
-    duration: {
-      type: Number,
-    },
-
-    slottedContent: {
-      state: true,
-    },
-    active: {
-      state: true,
-    },
-    translateX: {
-      state: true,
-    },
-  };
-
   static styles = [
     css`
       :host {
@@ -79,11 +67,22 @@ export class CarouselElement extends LitElement {
       }
     `,
   ];
+  @state() translateX = 0;
+  
+  @state() active = 0;
+  
+  @state()  slottedContent: Element[] = [];
+  
+  @property({
+    type: Number,
+  }) duration?: number;
+
+  private inverval?: number;
+  private timer?: number;
 
   constructor() {
     super();
-    this.translateX = 0;
-    this.active = 0;
+    
   }
 
   connectedCallback() {
@@ -101,8 +100,8 @@ export class CarouselElement extends LitElement {
     }
   }
 
-  firstUpdated() {
-    super.firstUpdated();
+  firstUpdated(_changedProperties: Map<string | number | symbol, unknown>) {
+    super.firstUpdated(_changedProperties);
     const slot = this.renderRoot.querySelector('slot');
     this.slottedContent = slot
       ? [...slot.assignedElements({ flatten: true })]
@@ -135,9 +134,6 @@ export class CarouselElement extends LitElement {
     `;
   }
 
-  /**
-   * select the next slide
-   */
   next() {
     let nextActive = this.active + 1;
     if (nextActive >= this.slottedContent.length) {
@@ -146,9 +142,7 @@ export class CarouselElement extends LitElement {
     this.setActive(nextActive);
   }
 
-  /**
-   * select the previous slide
-   */
+  
   previous() {
     let nextActive = this.active - 1;
     if (nextActive < 0) {
@@ -157,18 +151,17 @@ export class CarouselElement extends LitElement {
     this.setActive(nextActive);
   }
 
-  /**
-   * Sets the active slide
-   *
-   * @param {number} i
-   */
-  setActive(i) {
+  
+  setActive(i: number) {
     this.active = i;
-    let activeEl;
-    this.slottedContent.forEach((el, j) => {
+    let activeEl: Element | HTMLElement;
+    this.slottedContent?.forEach((el: Element | HTMLElement, j) => {
       if (j === this.active) {
         el.classList.add('active');
-        this.translateX = el.offsetLeft;
+        if ('offsetLeft' in el){
+          this.translateX = el.offsetLeft;
+        }
+        
         activeEl = el;
       } else {
         el.classList.remove('active');
@@ -178,7 +171,9 @@ export class CarouselElement extends LitElement {
       clearInterval(this.inverval);
     }
     this.inverval = setInterval(() => {
-      this.translateX = activeEl.offsetLeft;
+      if ('offsetLeft' in activeEl){
+        this.translateX = activeEl.offsetLeft;
+      }
     }, 50);
 
     if (this.duration) {
@@ -190,8 +185,8 @@ export class CarouselElement extends LitElement {
   }
 
   #setTouchEvents() {
-    let touchStartX;
-    let touchEndX;
+    let touchStartX: number;
+    let touchEndX: number;
     const passive = true;
     this.addEventListener(
       'touchstart',
@@ -218,4 +213,3 @@ export class CarouselElement extends LitElement {
   }
 }
 
-customElements.define('content-carousel', CarouselElement);

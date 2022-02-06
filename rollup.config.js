@@ -1,9 +1,12 @@
 import { nodeResolve } from '@rollup/plugin-node-resolve';
 import html from '@web/rollup-plugin-html';
-import  path  from 'path';
+import path from 'path';
 import copy from 'rollup-plugin-copy';
 import { terser } from 'rollup-plugin-terser';
 import { generateSW } from 'rollup-plugin-workbox';
+import typescript from '@rollup/plugin-typescript';
+
+const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 export default {
   // Add extra entry points here if there are multiple to build
@@ -16,7 +19,6 @@ export default {
       entryFileNames: '[name].[hash].[format].js',
       chunkFileNames: 'chunk.[hash].[format].js',
       format: 'es',
-
     },
   ],
 
@@ -27,7 +29,9 @@ export default {
     warn(warning);
   },
   plugins: [
-   
+    typescript({
+      tsconfig: 'tsconfig.app.json'
+    }),
     generateSW({
       navigateFallback: '/index.html',
       // where to output the generated sw
@@ -47,6 +51,7 @@ export default {
     }),
     nodeResolve({
       exportConditions: ['production'],
+      extensions
     }),
     terser({
       mangle: false,
