@@ -6,7 +6,7 @@ import '../shared/icon.js';
 import '../shared/off-canvas.js';
 import '../shared/progress-bar.js';
 import '../shared/timeline.js';
-
+import '../shared/loading.js';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { css, html, LitElement } from 'lit';
@@ -19,9 +19,12 @@ import tags from '../../styles/tags.js';
 
 library.add(faBars);
 export class MyResumeElement extends LitElement {
+  static API_URL = './data.json';
+
   static properties = {
     data: {},
     loading: {},
+    error: {},
     offCanvasDisabled: { state: true },
   };
 
@@ -108,6 +111,19 @@ export class MyResumeElement extends LitElement {
         color: #fff;
         font-size: 1.25rem;
         padding: 0;
+      }
+      app-loading {
+        position: fixed;
+        left: calc(50% - 40px);
+        top: calc(50% - 40px);
+      }
+      .app-error {
+        position: fixed;
+        top: 50%;
+        left: 0;
+        width: 100%;
+        text-align: center;
+        color: #FFF;
       }
       ${includeBreakpointUp(
         'xs',
@@ -207,11 +223,12 @@ export class MyResumeElement extends LitElement {
 
   constructor() {
     super();
-    this.loading = true;
+    
   }
 
   connectedCallback() {
     super.connectedCallback();
+    this.fetch = window.fetch.bind(window);
     this.#loadData();
     this.#onResize();
     window.addEventListener('resize', this.#debouncedResize);
@@ -224,9 +241,12 @@ export class MyResumeElement extends LitElement {
 
   async #loadData() {
     try {
-      this.data = await fetch('./data.json').then(data => data.json());
+      this.loading = true;
+      this.data = await this.fetch(MyResumeElement.API_URL).then(data => data.json());
     } catch (e) {
-      this.error = e;
+      this.error = new Error(
+        'There was an error loading data. Please check your internet connection and try again.'
+      );
     } finally {
       this.loading = false;
     }
@@ -267,9 +287,9 @@ export class MyResumeElement extends LitElement {
   render() {
     return html`
       ${this.loading
-        ? html`Loading`
+        ? html`<app-loading></app-loading>`
         : this.error
-          ? 'Error'
+          ? html`<div class="app-error">${this.error.message}</div>`
           : html`
             <off-canvas
               class="${this.offCanvasDisabled ? 'disabled' : ''} no-button"
