@@ -61,12 +61,22 @@
   ],
   "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA",  "Figma", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte"],
   "roles": [
+     {
+      "subtitle": "Concentrix Catalyst",
+      "title": "Technical Lead",
+      "timeFrame": {
+        "from": "2022-04-11",
+        "to": "NOW"
+      },
+      "content": "Concentrix Catalyst is one of Australia's leading . My role here is providing technical leadership on front-end web projects with a delivery focus.",
+      "tags": ["Angular", "Typescript", "Scrum"]
+    },
     {
       "subtitle": "DomaCom",
       "title": "Digital Lead",
       "timeFrame": {
         "from": "2017-05-29",
-        "to": "NOW"
+        "to": "2022-04-09"
       },
       "content": "DomaCom is a Fintech startup who are developing a fractional investment online platform. My role here was developing and maintaining the client-facing application as well as the internal intranet applications, written in Angular and .NET CORE and hosted in the Azure cloud. As well as this, I had to develop web component libraries to allow sharing of code between our web application as well as our marketing site which was a Wordpress CMS.",
       "tags": ["Angular", "NX", "Typescript", "StencilJS","Lit", "NestJS", ".NET CORE", "Service Bus", "Azure", "CosmosDB"]
