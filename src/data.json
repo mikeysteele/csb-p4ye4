@@ -56,10 +56,10 @@
     },
     {
       "name": ".NET Core",
-      "rating": "80"
+      "rating": 80
     }
   ],
-  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA",  "Figma", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte"],
+  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte", "Agile", "SCRUM"],
   "roles": [
      {
       "subtitle": "Concentrix Catalyst",
@@ -68,8 +68,8 @@
         "from": "2022-04-11",
         "to": "NOW"
       },
-      "content": "Concentrix Catalyst is one of Australia's leading . My role here is providing technical leadership on front-end web projects with a delivery focus.",
-      "tags": ["Angular", "Typescript", "Scrum"]
+      "content": "Concentrix Catalyst is one of Australia's leading customer experience consultancies. My role here is to provide technical leadership for front-end web projects, leveraging my expertise in the latest web technologies and a solid understanding of agile practices. In this role, I drive successful project delivery by overseeing the implementation of cutting-edge solutions, ensuring optimal user experiences and adherence to industry best practices. Additionally, I actively collaborate with cross-functional teams, fostering agile methodologies to enhance collaboration, efficiency, and timely project completion.",
+      "tags": ["Angular", "Typescript", ".NET CORE", "Scrum"]
     },
     {
       "subtitle": "DomaCom",

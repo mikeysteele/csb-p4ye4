@@ -47,6 +47,12 @@ export class MyResumeElement extends LitElement {
       :host(.menu-open) main {
         transform: translateX(var(--app-offcanvas-width));
       }
+      @media print {
+        :host {
+          max-width: calc(100vw - var(--app-offcanvas-width))
+
+        }
+      }
       main {
         background: var(--app-content-background);        
         transition: var(--app-offcanvas-transform);
