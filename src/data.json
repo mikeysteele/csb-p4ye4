@@ -56,17 +56,27 @@
     },
     {
       "name": ".NET Core",
-      "rating": "80"
+      "rating": 80
     }
   ],
-  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA",  "Figma", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte"],
+  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte", "Agile", "SCRUM"],
   "roles": [
+     {
+      "subtitle": "Concentrix Catalyst",
+      "title": "Technical Lead",
+      "timeFrame": {
+        "from": "2022-04-11",
+        "to": "NOW"
+      },
+      "content": "Concentrix Catalyst is one of Australia's leading customer experience consultancies. My role here is to provide technical leadership for front-end web projects, leveraging my expertise in the latest web technologies and a solid understanding of agile practices. In this role, I drive successful project delivery by overseeing the implementation of cutting-edge solutions, ensuring optimal user experiences and adherence to industry best practices. Additionally, I actively collaborate with cross-functional teams, fostering agile methodologies to enhance collaboration, efficiency, and timely project completion.",
+      "tags": ["Angular", "Typescript", ".NET CORE", "Scrum"]
+    },
     {
       "subtitle": "DomaCom",
       "title": "Digital Lead",
       "timeFrame": {
         "from": "2017-05-29",
-        "to": "NOW"
+        "to": "2022-04-09"
       },
       "content": "DomaCom is a Fintech startup who are developing a fractional investment online platform. My role here was developing and maintaining the client-facing application as well as the internal intranet applications, written in Angular and .NET CORE and hosted in the Azure cloud. As well as this, I had to develop web component libraries to allow sharing of code between our web application as well as our marketing site which was a Wordpress CMS.",
       "tags": ["Angular", "NX", "Typescript", "StencilJS","Lit", "NestJS", ".NET CORE", "Service Bus", "Azure", "CosmosDB"]

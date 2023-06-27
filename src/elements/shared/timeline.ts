@@ -32,6 +32,9 @@ export class ResumeTimelineElement extends LitElement {
       }
       li {
         padding-bottom: 1rem;
+        page-break-inside:avoid;
+        
+        
       }
       li + li {
         border-top: 1px solid #e3e3e3;

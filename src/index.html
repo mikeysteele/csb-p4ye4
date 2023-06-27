@@ -42,10 +42,23 @@
         --app-offcanvas-transform: transform 0.5s ease-in-out;
         
       }
-      @media screen {
-        body {
+      body {
           margin: 0;
           padding: 0;
+      }
+      @media print {
+        :root {
+          --app-offcanvas-width: 190px;
+          --app-max-width: 100vw;
+        }
+        html {
+          font-size: 12px;
+        }
+       
+      }
+      @media screen {
+        body {
+         
           background-color: var(--app-body-background);
           overflow-x: hidden;
         }
