@@ -48,18 +48,18 @@
     },
     {
       "name": "NodeJS",
-      "rating": 90
+      "rating": 95
     },
     {
       "name": "NestJS",
-      "rating": 85
+      "rating": 80
     },
     {
       "name": ".NET Core",
       "rating": 80
     }
   ],
-  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA", "Azure DevOps", "Lit", "StencilJS", "Ionic", "Flutter", "Svelte", "Agile", "SCRUM"],
+  "skills": ["React", "HTML5", "RXJS", "Web Components", "PWA", "Azure DevOps", "Lit", "StencilJS", "Ionic", "AWS", "Azure", "Agile", "Scrum"],
   "roles": [
      {
       "subtitle": "Concentrix Catalyst",
@@ -69,7 +69,7 @@
         "to": "NOW"
       },
       "content": "Concentrix Catalyst is one of Australia's leading customer experience consultancies. My role here is to provide technical leadership for front-end web projects, leveraging my expertise in the latest web technologies and a solid understanding of agile practices. In this role, I drive successful project delivery by overseeing the implementation of cutting-edge solutions, ensuring optimal user experiences and adherence to industry best practices. Additionally, I actively collaborate with cross-functional teams, fostering agile methodologies to enhance collaboration, efficiency, and timely project completion.",
-      "tags": ["Angular", "Typescript", ".NET CORE", "Scrum"]
+      "tags": ["Angular", "Typescript", ".NET CORE", "Azure", "AWS", "Scrum"]
     },
     {
       "subtitle": "DomaCom",
@@ -78,7 +78,7 @@
         "from": "2017-05-29",
         "to": "2022-04-09"
       },
-      "content": "DomaCom is a Fintech startup who are developing a fractional investment online platform. My role here was developing and maintaining the client-facing application as well as the internal intranet applications, written in Angular and .NET CORE and hosted in the Azure cloud. As well as this, I had to develop web component libraries to allow sharing of code between our web application as well as our marketing site which was a Wordpress CMS.",
+      "content": "DomaCom is a Fintech startup who are developing a fractional investment online platform. My role here was developing and maintaining the client-facing application as well as the internal intranet applications, written in Angular with a Nest.JS BFF which connected to .NET CORE backends, hosted in the Azure cloud. As well as this, I had to develop web component libraries to allow sharing of code between our web application as well as our marketing site which was a Wordpress CMS.",
       "tags": ["Angular", "NX", "Typescript", "StencilJS","Lit", "NestJS", ".NET CORE", "Service Bus", "Azure", "CosmosDB"]
     },
     {
@@ -99,7 +99,7 @@
         "from": "2013-01-01",
         "to": "2015-01-01"
       },
-      "content": "Initially engaged to create analytics reports for their custom web application, my role was expanded to include redesigning and developing their real-time advertising system in node.js, as well as porting the web application to Zend Framework 2 and data model improvements.",
+      "content": "Initially engaged to create analytics reports for their custom web application, my role was expanded to include redesigning and developing their real-time advertising system in node.js, socket.io and Redis, as well as porting the web application to Zend Framework 2 and data model improvements.",
       "tags": ["NodeJS", "Socket.IO", "Redis", "MySQL", "Zend", "PHP"]
     },
     {
